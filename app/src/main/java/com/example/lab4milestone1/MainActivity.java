@@ -3,8 +3,12 @@ package com.example.lab4milestone1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import java.lang.Thread;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,29 +35,52 @@ public class MainActivity extends AppCompatActivity {
     public void stopThread(View view) {
         stopThread = true;
     }
-}
 
+    class ExampleRunnable implements Runnable {
 
+        int seconds;
 
-class ExampleRunnable implements Runnable {
+        ExampleRunnable(int seconds) {
+            this.seconds = seconds;
+        }
 
-    int seconds;
-
-    ExampleRunnable(int seconds) {
-        this.seconds = seconds;
-    }
-
-    @Override
-    public void run() {
-        for (int i = 0; i < seconds; i++) {
-            if (stopThread){
-                runOnUiThread(new Runnable()){
-                    @Override
-                    public void run() {
-
-                    }
+        @Override
+        public void run() {
+            for (int i = 0; i < seconds; i++) {
+                if (stopThread){
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                            buttonStartThread.setText("Start");
+                        }
+                    });
+                    return;
+                }
+                if (i==5) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            buttonStartThread.setText("50%");
+                        }
+                    });
+                }
+                Log.d(TAG, "startThread: " + i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    buttonStartThread.setText("Start");
+                }
+            });
         }
     }
+
 }
+
+
+
