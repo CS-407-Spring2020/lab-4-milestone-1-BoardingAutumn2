@@ -36,7 +36,7 @@
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_thread"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
